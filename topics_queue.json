@@ -1,0 +1,188 @@
+[
+    {
+        "Topic": "Why `delete` Can Make JavaScript Objects Slower",
+        "Label": "V8 Under the Hood",
+        "Hook": "You deleted one property. Why can that make the whole object slower?",
+        "Research": "Explain hidden classes/shapes, dictionary-mode transitions, and safer alternatives for hot objects."
+    },
+    {
+        "Topic": "Why `{...obj}` Can Be Surprisingly Expensive",
+        "Label": "Hidden Performance",
+        "Hook": "This one line looks clean \u2014 but how much work is `{...obj}` actually doing?",
+        "Research": "Explain shallow copying, property enumeration, allocation, and repeated object spreads."
+    },
+    {
+        "Topic": "Why `map()` Isn't Always Faster or Better Than `for`",
+        "Label": "Performance Myth",
+        "Hook": "`map()` looks modern. But in a hot loop, could a boring `for` loop win?",
+        "Research": "Compare callback overhead, allocations, optimization, readability, and when the difference matters."
+    },
+    {
+        "Topic": "Why `Array.sort()` Can Quietly Change Your Data",
+        "Label": "Subtle Bugs",
+        "Hook": "You sorted a list for display \u2014 and accidentally changed the original data.",
+        "Research": "Explain that sort() mutates the array, shared references, and non-mutating alternatives."
+    },
+    {
+        "Topic": "Why `NaN !== NaN`",
+        "Label": "JavaScript That Doesn't Make Sense",
+        "Hook": "JavaScript has a value that isn't equal to itself. Why?",
+        "Research": "Explain IEEE-754 NaN semantics, Object.is(), Number.isNaN(), and common bugs."
+    },
+    {
+        "Topic": "Why `0.1 + 0.2 !== 0.3`",
+        "Label": "Under the Hood",
+        "Hook": "Your calculation is mathematically correct. So why does JavaScript disagree?",
+        "Research": "Explain binary floating-point representation, rounding, and safe comparison strategies."
+    },
+    {
+        "Topic": "Why `[] === []` Is False",
+        "Label": "JavaScript That Doesn't Make Sense",
+        "Hook": "Two empty arrays look identical \u2014 so why does JavaScript say they're different?",
+        "Research": "Explain reference identity, heap objects, and implications for React dependencies."
+    },
+    {
+        "Topic": "Why `const` Objects Can Still Change",
+        "Label": "JavaScript Gotcha",
+        "Hook": "`const` means constant\u2026 until you mutate the object.",
+        "Research": "Explain binding immutability vs object mutability and practical immutable-update patterns."
+    },
+    {
+        "Topic": "Why `Promise.then()` Never Runs Immediately",
+        "Label": "Event Loop",
+        "Hook": "Even an already-resolved Promise waits. What is it waiting for?",
+        "Research": "Explain microtasks, current call stack, and microtask checkpoints."
+    },
+    {
+        "Topic": "Why `setTimeout(fn, 0)` Is Not Immediate",
+        "Label": "Event Loop",
+        "Hook": "You asked for zero milliseconds. The browser still says: not yet.",
+        "Research": "Explain tasks, timer scheduling, minimum delay, and rendering opportunities."
+    },
+    {
+        "Topic": "How Microtasks Can Freeze the Browser",
+        "Label": "Browser Rendering",
+        "Hook": "A Promise chain can keep the browser from painting. Here's how.",
+        "Research": "Explain recursive microtasks, starvation, rendering checkpoints, and yielding."
+    },
+    {
+        "Topic": "The `async/await` Race Condition Nobody Sees",
+        "Label": "Async Race Conditions",
+        "Hook": "`await` makes code readable \u2014 but it doesn't stop old requests from winning.",
+        "Research": "Show out-of-order API responses, stale state, AbortController, and request sequencing."
+    },
+    {
+        "Topic": "Why `fetch()` Doesn't Reject on 404",
+        "Label": "Browser Behaviour",
+        "Hook": "A 404 can enter your `.then()` block. Yes, really.",
+        "Research": "Explain network failure vs HTTP response errors and response.ok."
+    },
+    {
+        "Topic": "Why `fetch()` Can Return Stale Data",
+        "Label": "Caching",
+        "Hook": "Your backend returned fresh data. Your browser may still show yesterday's response.",
+        "Research": "Explain HTTP caching, Cache-Control, browser cache, intermediaries, and cache invalidation."
+    },
+    {
+        "Topic": "Why Event Listeners Can Cause Memory Leaks",
+        "Label": "Memory & Browser APIs",
+        "Hook": "The DOM node disappeared. Why might your data still be alive?",
+        "Research": "Explain listener references, closures, detached nodes, cleanup, and lifecycle management."
+    },
+    {
+        "Topic": "How a Closure Can Keep Megabytes in Memory",
+        "Label": "Memory & Closures",
+        "Hook": "That tiny callback may be holding onto a huge object you forgot about.",
+        "Research": "Explain reachability, captured variables, retained objects, and minimizing closure scope."
+    },
+    {
+        "Topic": "Why `WeakMap` Is Useful for Memory-Safe Metadata",
+        "Label": "Memory & GC",
+        "Hook": "Sometimes the best reference is one the garbage collector can forget.",
+        "Research": "Explain weak references, object-keyed metadata, reachability, and WeakMap use cases."
+    },
+    {
+        "Topic": "Why Setting a Variable to `null` Doesn't Free Memory Immediately",
+        "Label": "Garbage Collection",
+        "Hook": "You set it to `null`. So why didn't memory instantly drop?",
+        "Research": "Explain reachability, GC timing, heap behavior, and why memory charts don't immediately follow source code."
+    },
+    {
+        "Topic": "Why V8 Likes Consistent Object Shapes",
+        "Label": "V8 Under the Hood",
+        "Hook": "Two objects with the same properties can be much easier for V8 to optimize.",
+        "Research": "Explain hidden classes/shapes, property initialization order, and stable object layouts."
+    },
+    {
+        "Topic": "How V8 Decides to Optimize Your Function",
+        "Label": "V8 Under the Hood",
+        "Hook": "The code you wrote may not be the code V8 executes after a function gets hot.",
+        "Research": "Explain interpreter, type feedback, optimized machine code, and optimization tiers at a high level."
+    },
+    {
+        "Topic": "How One Unexpected Type Can Trigger Deoptimization",
+        "Label": "V8 Under the Hood",
+        "Hook": "Your function was fast for thousands of calls \u2014 then one weird value changed everything.",
+        "Research": "Explain type feedback, speculative optimization, deoptimization, and polymorphism."
+    },
+    {
+        "Topic": "Why React Re-Renders Don't Mean the DOM Re-Renders",
+        "Label": "React Rendering",
+        "Hook": "React rendered again. But did your browser actually change anything?",
+        "Research": "Explain render phase, reconciliation, commit phase, and DOM mutations."
+    },
+    {
+        "Topic": "Why Changing a React Context Can Re-render Many Components",
+        "Label": "React Performance",
+        "Hook": "One context value changed \u2014 why did components nowhere near the change render again?",
+        "Research": "Explain context propagation, provider value identity, splitting contexts, and memoization."
+    },
+    {
+        "Topic": "Why `useMemo` Can Make React Slower",
+        "Label": "React Performance",
+        "Hook": "Memoization sounds like a performance win. Sometimes it's extra work.",
+        "Research": "Explain dependency comparisons, retained values, memoization overhead, and when it is useful."
+    },
+    {
+        "Topic": "The Stale Closure Bug in React",
+        "Label": "React + Closures",
+        "Hook": "Your callback is running now \u2014 so why is it using yesterday's state?",
+        "Research": "Explain render snapshots, closures, dependency arrays, functional updates, and stale state."
+    },
+    {
+        "Topic": "Why `useEffect` Can Create Waterfalls",
+        "Label": "React Rendering",
+        "Hook": "Fetching data inside an effect can make your app wait longer than necessary.",
+        "Research": "Explain post-render effects, sequential requests, loading waterfalls, and server-side/data-fetching alternatives."
+    },
+    {
+        "Topic": "Why Debouncing Can Lose User Actions",
+        "Label": "Browser Behaviour",
+        "Hook": "Your debounce fixed the performance problem \u2014 but did it silently drop important work?",
+        "Research": "Explain leading/trailing calls, cancellation, debounce vs throttle, and UI examples."
+    },
+    {
+        "Topic": "Layout Thrashing: The Read-Write Trap",
+        "Label": "Rendering Performance",
+        "Hook": "Read layout, write styles, read again\u2026 and suddenly the browser is doing expensive work.",
+        "Research": "Explain forced synchronous layout, style/layout recalculation, batching reads and writes."
+    },
+    {
+        "Topic": "Why Creating Functions in a Loop Can Increase GC Pressure",
+        "Label": "Memory & Performance",
+        "Hook": "Creating a function is cheap. Creating millions of short-lived functions isn't free.",
+        "Research": "Explain allocations, closures, garbage collection pressure, and when function reuse matters."
+    },
+    {
+        "Topic": "Why `innerHTML` Can Be Faster \u2014 and Still Be the Wrong Choice",
+        "Label": "Browser Performance",
+        "Hook": "The faster DOM API isn't always the better performance decision.",
+        "Research": "Explain parsing vs node creation, security, event listeners, layout implications, and workload-dependent trade-offs."
+    },
+    {
+        "Topic": "Why `requestAnimationFrame()` Is Different From `setTimeout()`",
+        "Label": "Browser Rendering",
+        "Hook": "Both can run code later. Only one is designed around the browser's paint cycle.",
+        "Research": "Explain frame scheduling, animation timing, rendering synchronization, and appropriate use cases."
+    }
+]
