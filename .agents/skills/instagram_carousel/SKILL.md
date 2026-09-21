@@ -34,10 +34,10 @@ Use the `generate_image` tool to create the cover thumbnail (portrait 4:5, stand
   - **Image Naming**: `slide1`, `slide2`, `slide3`, ..., `slide8`.
   - **Prompt Guidelines**: Premium tech editorial look, dark navy blue, cyan accents, visual storytelling (flow diagrams, metaphors, comparisons). NO AVATAR in these 8 slides. Ensure text and graphics match the JSON script.
 
-## Step 4: Organize Files
-Once all images (thumbnail + 8 slides) are generated in your artifact directory, move them to the project directory: `/Applications/GenAI/InstagramJavascript/slides/YYYY-MM-DD/<carousel_count>/`.
+## Step 4 & 5: Organize Files & Git Auto-Push
+Once all images (thumbnail + 8 slides) are generated in your artifact directory, move them to the project directory and push to Git ONLY IF all 9 images were successfully created.
 
-To do this, use the `run_command` tool with a bash script like this to calculate the date, count folders, and move the files:
+To do this, use the `run_command` tool with the following bash script:
 
 ```bash
 DATE=$(date +%Y-%m-%d)
@@ -50,25 +50,29 @@ NEXT_COUNT=$((COUNT + 1))
 TARGET_DIR="$BASE_DIR/$NEXT_COUNT"
 mkdir -p "$TARGET_DIR"
 
-# Move files (taking the most recently generated ones if multiple exist)
-mv $(ls -t <ARTIFACT_DIR>/*thumbnail*.jpg | head -n 1) "$TARGET_DIR/thumbnail.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide1*.jpg | head -n 1) "$TARGET_DIR/slide1.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide2*.jpg | head -n 1) "$TARGET_DIR/slide2.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide3*.jpg | head -n 1) "$TARGET_DIR/slide3.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide4*.jpg | head -n 1) "$TARGET_DIR/slide4.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide5*.jpg | head -n 1) "$TARGET_DIR/slide5.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide6*.jpg | head -n 1) "$TARGET_DIR/slide6.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide7*.jpg | head -n 1) "$TARGET_DIR/slide7.jpg"
-mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg | head -n 1) "$TARGET_DIR/slide8.jpg"
+# Move files (suppress errors if missing)
+mv $(ls -t <ARTIFACT_DIR>/*thumbnail*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/thumbnail.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide1*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide1.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide2*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide2.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide3*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide3.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide4*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide4.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide5*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide5.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide6*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide6.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide7*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide7.jpg" 2>/dev/null || true
+mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide8.jpg" 2>/dev/null || true
+
+# Validation Check: Verify all 9 images exist
+IMAGE_COUNT=$(ls -1 "$TARGET_DIR"/*.jpg 2>/dev/null | wc -l | tr -d ' ')
+
+if [ "$IMAGE_COUNT" -eq 9 ]; then
+    echo "Success: All 9 images generated. Pushing to Git..."
+    git add slides/
+    git commit -m "Auto-generated carousel: <Carousel_Topic_Name>"
+    git push
+else
+    echo "Error: Incomplete generation ($IMAGE_COUNT/9 images). Aborting Git push and removing incomplete folder."
+    rm -rf "$TARGET_DIR"
+fi
 ```
 
-Confirm to the user once the files have been successfully organized. Do NOT save the JSON file to the project folder.
-
-## Step 5: Git Auto-Push
-After organizing the files in Step 4, run the following git commands in the `/Applications/GenAI/InstagramJavascript/` directory to push the newly created carousel to the remote repository:
-```bash
-git add slides/
-git commit -m "Auto-generated carousel: <Carousel_Topic_Name>"
-git push
-```
-Inform the user once the push is successful!
+Inform the user about the final result (whether it was successfully pushed or if it aborted due to missing slides). Do NOT save the JSON file to the project folder.
