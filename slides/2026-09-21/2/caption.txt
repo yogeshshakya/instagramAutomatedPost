@@ -1,3 +1,5 @@
+Using the spread operator `{...obj}` in JavaScript seems like a clean and elegant way to copy objects. But under the hood, it's not just a simple reference—it can hide massive performance costs if you aren't careful!
+
 • Object spread (`{...obj}`) looks elegant but it hides heavy operations.
 • Every time you spread, V8 iterates over all enumerable keys (even prototypes).
 • Spreading inside a loop (like a `.reduce`) causes massive O(N^2) memory allocation.
