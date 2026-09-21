@@ -16,7 +16,11 @@ Ask the user for the following details (in Hinglish):
 - **Hook**: Main bold punchline for the thumbnail.
 - **Research (Optional)**: Any specific research briefing to use for the script.
 
-Wait for the user's response before proceeding to Step 2.
+IMPORTANT: Use the `ask_question` tool to ask the user whether they want to proceed in **Automate** or **Manual** mode.
+- Option 1: "Automate (Save to slides/ & Push to Git)"
+- Option 2: "Manual (Save to manual_slides/ & Do NOT Push)"
+
+Wait for the user's responses (details + mode choice) before proceeding to Step 2.
 
 ## Step 2: Generate Thumbnail Image
 Use the `generate_image` tool to create the cover thumbnail (portrait 4:5, standard aspect ratio '3:4').
@@ -41,7 +45,15 @@ To do this, use the `run_command` tool with the following bash script:
 
 ```bash
 DATE=$(date +%Y-%m-%d)
-BASE_DIR="/Applications/GenAI/InstagramJavascript/slides/$DATE"
+# IMPORTANT: Replace <Automate_Or_Manual> with "Automate" or "Manual" based on user's choice
+MODE="<Automate_Or_Manual>" 
+
+if [ "$MODE" = "Manual" ]; then
+    BASE_DIR="/Applications/GenAI/InstagramJavascript/manual_slides/$DATE"
+else
+    BASE_DIR="/Applications/GenAI/InstagramJavascript/slides/$DATE"
+fi
+
 mkdir -p "$BASE_DIR"
 
 # Calculate next carousel count
@@ -65,12 +77,17 @@ mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/sli
 IMAGE_COUNT=$(ls -1 "$TARGET_DIR"/*.jpg 2>/dev/null | wc -l | tr -d ' ')
 
 if [ "$IMAGE_COUNT" -eq 9 ]; then
-    echo "Success: All 9 images generated. Pushing to Git..."
-    git add slides/
-    git commit -m "Auto-generated carousel: <Carousel_Topic_Name>"
-    git push
+    echo "Success: All 9 images generated."
+    if [ "$MODE" = "Automate" ]; then
+        echo "Pushing to Git..."
+        git add slides/
+        git commit -m "Auto-generated carousel: <Carousel_Topic_Name>"
+        git push
+    else
+        echo "Manual Mode Active: Saved to manual_slides/. Skipping Git push."
+    fi
 else
-    echo "Error: Incomplete generation ($IMAGE_COUNT/9 images). Aborting Git push and removing incomplete folder."
+    echo "Error: Incomplete generation ($IMAGE_COUNT/9 images). Aborting and removing incomplete folder."
     rm -rf "$TARGET_DIR"
 fi
 ```
