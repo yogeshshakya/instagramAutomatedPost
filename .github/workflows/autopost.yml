@@ -1,0 +1,60 @@
+name: Auto-Post to Instagram
+
+on:
+  push:
+    paths:
+      - 'slides/**/caption.txt'
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Find latest carousel and build URLs
+        id: prepare
+        run: |
+          # Get the directory of the newly pushed caption.txt
+          LATEST_CAPTION=$(ls -t slides/*/*/caption.txt | head -n 1)
+          CAROUSEL_DIR=$(dirname "$LATEST_CAPTION")
+          echo "Found carousel directory: $CAROUSEL_DIR"
+
+          # Collect all JPG images in proper order for the carousel
+          IMAGES=("thumbnail.jpg" "slide1.jpg" "slide2.jpg" "slide3.jpg" "slide4.jpg" "slide5.jpg" "slide6.jpg" "slide7.jpg" "slide8.jpg")
+          
+          PATHS=""
+          URLS=""
+          SHA="${{ github.sha }}"
+          
+          for IMG in "${IMAGES[@]}"; do
+            if [ -f "$CAROUSEL_DIR/$IMG" ]; then
+              PATHS="${PATHS}${CAROUSEL_DIR}/${IMG},"
+              URLS="${URLS}https://raw.githubusercontent.com/${{ github.repository }}/${SHA}/${CAROUSEL_DIR}/${IMG},"
+            fi
+          done
+          
+          # Remove trailing commas
+          echo "IMAGE_PATHS=${PATHS%,}" >> "$GITHUB_OUTPUT"
+          echo "RAW_IMAGE_URLS=${URLS%,}" >> "$GITHUB_OUTPUT"
+          echo "CAPTION_FILE=$LATEST_CAPTION" >> "$GITHUB_OUTPUT"
+
+      - name: Post to Telegram and Instagram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_BUSINESS_ID: ${{ secrets.IG_BUSINESS_ID }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          IMAGE_PATHS: ${{ steps.prepare.outputs.IMAGE_PATHS }}
+          RAW_IMAGE_URLS: ${{ steps.prepare.outputs.RAW_IMAGE_URLS }}
+          CAPTION_FILE_INSTAGRAM: ${{ steps.prepare.outputs.CAPTION_FILE }}
+          CAPTION_FILE_TELEGRAM: ${{ steps.prepare.outputs.CAPTION_FILE }}
+        run: python scripts/post.py

@@ -77,6 +77,12 @@ mv $(ls -t <ARTIFACT_DIR>/*slide7*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/sli
 mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide8.jpg" 2>/dev/null || true
 
 # Save the captions, SEO keywords, and hashtags
+# IMPORTANT: Format <AGENT_INSERT_CAPTION_TEXT_HERE> exactly as follows:
+# - Main caption content must be in bullet points.
+# - Exactly TWO empty lines gap.
+# - SEO Keywords enclosed in brackets like: [keyword1] [keyword2]
+# - Exactly TWO empty lines gap.
+# - Hashtags like: #hash1 #hash2
 cat << 'EOF' > "$TARGET_DIR/caption.txt"
 <AGENT_INSERT_CAPTION_TEXT_HERE>
 EOF
