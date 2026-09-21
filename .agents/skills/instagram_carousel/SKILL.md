@@ -41,7 +41,10 @@ Use the `generate_image` tool to create the cover thumbnail (portrait 4:5, stand
 ## Step 4 & 5: Organize Files & Git Auto-Push
 Once all images (thumbnail + 8 slides) are generated in your artifact directory, move them to the project directory and push to Git ONLY IF all 9 images were successfully created.
 
-To do this, use the `run_command` tool with the following bash script:
+To do this, use the `run_command` tool with the following bash script. 
+**IMPORTANT**: 
+1. Replace `<Automate_Or_Manual>` with "Automate" or "Manual".
+2. Replace `<AGENT_INSERT_CAPTION_TEXT_HERE>` with the actual formatted captions, hashtags, and SEO keywords from your generated JSON.
 
 ```bash
 DATE=$(date +%Y-%m-%d)
@@ -73,6 +76,11 @@ mv $(ls -t <ARTIFACT_DIR>/*slide6*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/sli
 mv $(ls -t <ARTIFACT_DIR>/*slide7*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide7.jpg" 2>/dev/null || true
 mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/slide8.jpg" 2>/dev/null || true
 
+# Save the captions, SEO keywords, and hashtags
+cat << 'EOF' > "$TARGET_DIR/caption.txt"
+<AGENT_INSERT_CAPTION_TEXT_HERE>
+EOF
+
 # Validation Check: Verify all 9 images exist
 IMAGE_COUNT=$(ls -1 "$TARGET_DIR"/*.jpg 2>/dev/null | wc -l | tr -d ' ')
 
@@ -80,7 +88,7 @@ if [ "$IMAGE_COUNT" -eq 9 ]; then
     echo "Success: All 9 images generated."
     if [ "$MODE" = "Automate" ]; then
         echo "Pushing to Git..."
-        git add slides/
+        git add "$TARGET_DIR/caption.txt" slides/
         git commit -m "Auto-generated carousel: <Carousel_Topic_Name>"
         git push
     else
@@ -92,4 +100,4 @@ else
 fi
 ```
 
-Inform the user about the final result (whether it was successfully pushed or if it aborted due to missing slides). Do NOT save the JSON file to the project folder.
+Inform the user about the final result (whether it was successfully pushed or if it aborted due to missing slides).
