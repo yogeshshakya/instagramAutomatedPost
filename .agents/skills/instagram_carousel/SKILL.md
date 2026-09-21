@@ -26,7 +26,8 @@ Wait for the user's responses (details + mode choice) before proceeding to Step 
 Use the `generate_image` tool to create the cover thumbnail (portrait 4:5, standard aspect ratio '3:4').
 - **ImagePaths**: MUST include the avatar image located at `/Applications/GenAI/InstagramJavascript/assets/avatar.png`.
 - **Prompt Guidelines**:
-  - Must look like a professionally art-directed technology editorial thumbnail, NOT a generic Canva template.
+  - Must look like a professionally art-directed technology editorial presentation cover (NOT a generic Canva template).
+  - IMPORTANT: DO NOT include any fake social media UI (like, comment, share buttons), device frames, or letterboxing borders. The design MUST be pure, full-bleed, edge-to-edge.
   - Dark navy/deep blue futuristic developer environment with cyan/electric blue accents.
   - The 3D boy avatar must be an ACTIVE visual storytelling element (e.g., pointing, holding, pausing code). DO NOT just place him passively.
   - Include the exact Text: The Label, Hook, and Topic/Headline provided by the user, plus the handle `@modernjavascripthub` at the bottom.
@@ -36,7 +37,8 @@ Use the `generate_image` tool to create the cover thumbnail (portrait 4:5, stand
 1. First, based on the user's topic and research, generate the 8-slide JSON script. Focus on advanced JS/React, non-obvious behavior, simple language, no basic definitions. Ensure the JSON structure exactly matches the previously established 8-slide format (Hook, Simple Explanation, Code, Flow, Under the Hood, Common Mistake, Better Approach, Summary). Output ONLY valid JSON.
 2. Immediately after outputting the JSON, use the `generate_image` tool concurrently to generate 8 slide images corresponding to the 8 slides in the JSON.
   - **Image Naming**: `slide1`, `slide2`, `slide3`, ..., `slide8`.
-  - **Prompt Guidelines**: Premium tech editorial look, dark navy blue, cyan accents, visual storytelling (flow diagrams, metaphors, comparisons). NO AVATAR in these 8 slides. Ensure text and graphics match the JSON script.
+  - **Prompt Guidelines**: Premium tech editorial presentation slide, dark navy blue, cyan accents, visual storytelling (flow diagrams, metaphors, comparisons). NO AVATAR in these 8 slides. 
+  - IMPORTANT: DO NOT include any fake social media UI (like, comment, share buttons), mockups, device frames, or white borders/letterboxing. The design MUST be pure, full-bleed, edge-to-edge. Ensure text and graphics match the JSON script.
 
 ## Step 4 & 5: Organize Files & Git Auto-Push
 Once all images (thumbnail + 8 slides) are generated in your artifact directory, move them to the project directory and push to Git ONLY IF all 9 images were successfully created.
