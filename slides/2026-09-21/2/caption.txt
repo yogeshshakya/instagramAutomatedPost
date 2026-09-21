@@ -1,0 +1,10 @@
+• Object spread (`{...obj}`) looks elegant but it hides heavy operations.
+• Every time you spread, V8 iterates over all enumerable keys (even prototypes).
+• Spreading inside a loop (like a `.reduce`) causes massive O(N^2) memory allocation.
+• For large datasets, use `Object.assign` for mutation, or structural sharing.
+
+
+[JavaScript Performance] [V8 Object Allocation] [React Spread Operator] [Frontend Developer Tips]
+
+
+#javascript #reactjs #webperformance #coding #javascriptdeveloper
