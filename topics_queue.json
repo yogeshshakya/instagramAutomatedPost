@@ -1,11 +1,5 @@
 [
     {
-        "Topic": "Why `delete` Can Make JavaScript Objects Slower",
-        "Label": "V8 Under the Hood",
-        "Hook": "You deleted one property. Why can that make the whole object slower?",
-        "Research": "Explain hidden classes/shapes, dictionary-mode transitions, and safer alternatives for hot objects."
-    },
-    {
         "Topic": "Why `{...obj}` Can Be Surprisingly Expensive",
         "Label": "Hidden Performance",
         "Hook": "This one line looks clean \u2014 but how much work is `{...obj}` actually doing?",
