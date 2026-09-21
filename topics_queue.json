@@ -1,11 +1,5 @@
 [
     {
-        "Topic": "Why `{...obj}` Can Be Surprisingly Expensive",
-        "Label": "Hidden Performance",
-        "Hook": "This one line looks clean \u2014 but how much work is `{...obj}` actually doing?",
-        "Research": "Explain shallow copying, property enumeration, allocation, and repeated object spreads."
-    },
-    {
         "Topic": "Why `map()` Isn't Always Faster or Better Than `for`",
         "Label": "Performance Myth",
         "Hook": "`map()` looks modern. But in a hot loop, could a boring `for` loop win?",
