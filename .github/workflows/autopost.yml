@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'slides/**/caption.txt'
+  workflow_dispatch:
 
 jobs:
   post:
