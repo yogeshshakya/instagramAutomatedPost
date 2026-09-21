@@ -78,7 +78,7 @@ mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/sli
 
 # Save the captions, SEO keywords, and hashtags
 # IMPORTANT: Format <AGENT_INSERT_CAPTION_TEXT_HERE> exactly as follows:
-# - Main caption content must be in bullet points.
+# - Main caption content must be in simple, easy-to-understand bullet points for the viewer.
 # - Exactly TWO empty lines gap.
 # - SEO Keywords enclosed in brackets like: [keyword1] [keyword2]
 # - Exactly TWO empty lines gap.

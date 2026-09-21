@@ -21,12 +21,12 @@ jobs:
       - name: Find latest carousel and build URLs
         id: prepare
         run: |
-          # Get the directory of the newly pushed caption.txt
-          LATEST_CAPTION=$(ls -t slides/*/*/caption.txt | head -n 1)
+          # Use sort -V instead of ls -t because GitHub Actions doesn't preserve file creation times on checkout
+          LATEST_CAPTION=$(ls slides/*/*/caption.txt | sort -V | tail -n 1)
           CAROUSEL_DIR=$(dirname "$LATEST_CAPTION")
           echo "Found carousel directory: $CAROUSEL_DIR"
 
-          # Collect all JPG images in proper order for the carousel
+          # Collect all JPG images in strict order for the carousel (Thumbnail ALWAYS first, then slides 1-8)
           IMAGES=("thumbnail.jpg" "slide1.jpg" "slide2.jpg" "slide3.jpg" "slide4.jpg" "slide5.jpg" "slide6.jpg" "slide7.jpg" "slide8.jpg")
           
           PATHS=""
