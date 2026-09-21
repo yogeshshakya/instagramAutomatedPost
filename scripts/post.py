@@ -44,6 +44,10 @@ def read_text(path):
 
 
 def post_to_telegram(caption):
+    if not TELEGRAM_BOT_TOKEN or TELEGRAM_BOT_TOKEN.lower() == "dummy":
+        print("Telegram: Token missing or set to 'dummy' - skipping Telegram.", file=sys.stderr)
+        return None
+
     if len(IMAGE_PATHS) == 1:
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
         with open(IMAGE_PATHS[0], "rb") as photo:
