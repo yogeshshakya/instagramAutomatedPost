@@ -337,8 +337,7 @@ def main():
     try:
         post_to_telegram(tg_caption)
     except Exception as e:
-        errors.append(f"Telegram error: {e}")
-        print(f"Telegram error: {e}", file=sys.stderr)
+        print(f"Warning: Telegram post failed ({e}). Skipping.", file=sys.stderr)
 
     try:
         post_to_instagram(ig_caption)
