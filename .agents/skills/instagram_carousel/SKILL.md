@@ -84,7 +84,7 @@ mv $(ls -t <ARTIFACT_DIR>/*slide8*.jpg 2>/dev/null | head -n 1) "$TARGET_DIR/sli
 # - One empty line gap.
 # - Main caption content in simple, easy-to-understand bullet points.
 # - Exactly TWO empty lines gap.
-# - SEO Keywords enclosed in brackets like: [keyword1] [keyword2]
+# - SEO Keywords comma-separated inside a single bracket like: [keyword1,keyword2,keyword3]
 # - Exactly TWO empty lines gap.
 # - Hashtags like: #hash1 #hash2
 cat << 'EOF' > "$TARGET_DIR/caption.txt"
